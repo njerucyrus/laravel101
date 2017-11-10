@@ -2,6 +2,7 @@
 
 namespace Blog\Http\Controllers;
 
+use Blog\Comment;
 use Illuminate\Http\Request;
 
 class CommentController extends Controller
@@ -13,7 +14,7 @@ class CommentController extends Controller
      */
     public function index()
     {
-        //
+        return view('blog');
     }
 
     /**
@@ -23,7 +24,7 @@ class CommentController extends Controller
      */
     public function create()
     {
-        //
+
     }
 
     /**
@@ -34,7 +35,12 @@ class CommentController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $comment = new Comment;
+        $comment->post_id = $request->input('post_id');
+        $comment->commented_by = $request->input('commented_by');
+        $comment->comment_text = $request->input('comment_text');
+        $comment->save();
+        return redirect('/posts');
     }
 
     /**
@@ -56,7 +62,8 @@ class CommentController extends Controller
      */
     public function edit($id)
     {
-        //
+        $comment = Comment::find($id);
+        return view('edit_comment', compact('comment'));
     }
 
     /**
@@ -68,7 +75,10 @@ class CommentController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $comment = Comment::find($id);
+        $comment->comment_text = $request->input('comment_text');
+        $comment->save();
+        return redirect('/posts');
     }
 
     /**

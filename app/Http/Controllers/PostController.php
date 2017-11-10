@@ -2,6 +2,7 @@
 
 namespace Blog\Http\Controllers;
 
+use Blog\Post;
 use Illuminate\Http\Request;
 
 class PostController extends Controller
@@ -13,7 +14,9 @@ class PostController extends Controller
      */
     public function index()
     {
-        //
+        $posts = Post::all();
+
+        return view('posts', compact('posts'));
     }
 
     /**
@@ -23,7 +26,7 @@ class PostController extends Controller
      */
     public function create()
     {
-        //
+        return view('create_post');
     }
 
     /**
@@ -34,7 +37,13 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $post = new Post;
+        $post->title = $request->input('title');
+        $post->posted_by = $request->input('posted_by');
+        $post->body = $request->input('body');
+        $post->save();
+        $request->session()->flash('Post created successfully');
+        return redirect('/posts');
     }
 
     /**
@@ -45,7 +54,8 @@ class PostController extends Controller
      */
     public function show($id)
     {
-        //
+        $post = Post::find($id);
+        return view('post_detail', compact('post'));
     }
 
     /**
@@ -56,7 +66,8 @@ class PostController extends Controller
      */
     public function edit($id)
     {
-        //
+        $post = Post::find($id);
+        return view('edit_post', compact('post'));
     }
 
     /**
@@ -68,7 +79,12 @@ class PostController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $post = Post::find($id);
+        $post->title = $request->input('title');
+        $post->body = $request->input('body');
+        $post->save();
+        $request->session()->flash('post information updated');
+        return redirect('/posts');
     }
 
     /**
@@ -79,6 +95,8 @@ class PostController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $post = Post::find($id);
+        $post->delete();
+
     }
 }
