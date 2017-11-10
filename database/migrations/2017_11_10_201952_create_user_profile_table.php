@@ -15,7 +15,14 @@ class CreateUserProfileTable extends Migration
     {
         Schema::create('user_profiles', function (Blueprint $table) {
             $table->increments('id');
+            $table->string('country');
+            $table->unsignedInteger('user_id')->index();
+            $table->string('gender');
             $table->timestamps();
+
+            $table->foreign('user_id')
+                ->references('id')->on('users');
+
         });
     }
 
