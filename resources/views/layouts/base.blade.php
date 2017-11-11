@@ -30,8 +30,8 @@
 
         </div>
 
-        <!-- Sidebar Widgets Column -->
-        @include('layouts.sidebar_widgets')
+            @yield('sidebar_widgets')
+
 
     </div>
     <!-- /.row -->
@@ -40,8 +40,8 @@
 
 <!-- Footer -->
 <footer class="py-5 bg-dark">
-   @include('layouts.footer')
-    <!-- /.container -->
+@include('layouts.footer')
+<!-- /.container -->
 </footer>
 @include('layouts.js')
 </body>

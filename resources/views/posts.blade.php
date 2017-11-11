@@ -55,3 +55,7 @@
         </li>
     </ul>
 @endsection
+
+@section('sidebar_widgets')
+    @include('layouts.sidebar_widgets')
+@endsection
