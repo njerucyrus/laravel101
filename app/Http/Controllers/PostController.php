@@ -42,7 +42,7 @@ class PostController extends Controller
         $post->posted_by = $request->input('posted_by');
         $post->body = $request->input('body');
         $post->save();
-        $request->session()->flash('Post created successfully');
+        $request->session()->flash('message', 'Post created successfully');
         return redirect('/posts');
     }
 
@@ -83,7 +83,7 @@ class PostController extends Controller
         $post->title = $request->input('title');
         $post->body = $request->input('body');
         $post->save();
-        $request->session()->flash('post information updated');
+        $request->session()->flash('message','post information updated');
         return redirect('/posts');
     }
 
