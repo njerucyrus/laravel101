@@ -1,49 +1,37 @@
 @extends('layouts.base')
 @section('content')
-    <h1 class="my-4">Page Heading
-        <small>Secondary Text</small>
-    </h1>
+    <h5 class="my-4">Whats Happening
+        <small><a href="{{route('posts.create')}} " class="btn-link">Make Post</a></small>
+    </h5>
+    @foreach($posts as $post)
     <!-- Blog Post -->
     <div class="card mb-4">
+        <a href="/posts/{{$post->id}}/edit">
         <img class="card-img-top" src="http://placehold.it/750x300" alt="Card image cap">
-        <div class="card-body">
-            <h2 class="card-title">Post Title</h2>
-            <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reiciendis aliquid atque, nulla? Quos cum ex quis soluta, a laboriosam. Dicta expedita corporis animi vero voluptate voluptatibus possimus, veniam magni quis!</p>
+        </a>
+            <div class="card-body">
+            <h2 class="card-title">{{$post->title}}</h2>
+            <p class="card-text">
+                {{ $post->body }}
+            </p>
             <a href="#" class="btn btn-primary">Read More &rarr;</a>
         </div>
         <div class="card-footer text-muted">
-            Posted on January 1, 2017 by
-            <a href="#">Start Bootstrap</a>
-        </div>
-    </div>
+           <span style="color: green;">
+               Posted {{ $post->created_at->diffForHumans() }} by {{$post->user->name }}
+           </span>
+          <div class="clearfix pull-right">
+                <a href="#" class=""><span class="fa fa-2x fa-comment-o">comment</span></a>
 
-    <!-- Blog Post -->
-    <div class="card mb-4">
-        <img class="card-img-top" src="http://placehold.it/750x300" alt="Card image cap">
-        <div class="card-body">
-            <h2 class="card-title">Post Title</h2>
-            <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reiciendis aliquid atque, nulla? Quos cum ex quis soluta, a laboriosam. Dicta expedita corporis animi vero voluptate voluptatibus possimus, veniam magni quis!</p>
-            <a href="#" class="btn btn-primary">Read More &rarr;</a>
-        </div>
-        <div class="card-footer text-muted">
-            Posted on January 1, 2017 by
-            <a href="#">Start Bootstrap</a>
-        </div>
-    </div>
+                <a href="#" class=""><span class="fa fa-2x fa-heart-o">like</span></a>
 
-    <!-- Blog Post -->
-    <div class="card mb-4">
-        <img class="card-img-top" src="http://placehold.it/750x300" alt="Card image cap">
-        <div class="card-body">
-            <h2 class="card-title">Post Title</h2>
-            <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reiciendis aliquid atque, nulla? Quos cum ex quis soluta, a laboriosam. Dicta expedita corporis animi vero voluptate voluptatibus possimus, veniam magni quis!</p>
-            <a href="#" class="btn btn-primary">Read More &rarr;</a>
-        </div>
-        <div class="card-footer text-muted">
-            Posted on January 1, 2017 by
-            <a href="#">Start Bootstrap</a>
+                <a href="#" class=""><span class="fa fa-2x fa-share">share</span></a>
+          </div>
         </div>
     </div>
+    @endforeach
+
+
 
     <!-- Pagination -->
     <ul class="pagination justify-content-center mb-4">

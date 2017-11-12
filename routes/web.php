@@ -19,5 +19,4 @@ Auth::routes();
 
 //Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/', 'PostController@index');
-Route::get('/posts/create','PostController@create')->middleware('auth');
 Route::resource('/posts', 'PostController');

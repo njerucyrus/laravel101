@@ -17,7 +17,6 @@
             <li class="nav-item">
                 <a class="nav-link" href="#">Contact</a>
             </li>
-            <ul class="nav navbar-nav navbar-right">
                 <!-- Authentication Links -->
                 @guest
                     <li><a href="{{ route('login') }}">Login</a></li>
@@ -43,7 +42,7 @@
                             </ul>
                         </li>
                         @endguest
-            </ul>
+
         </ul>
     </div>
 </div>

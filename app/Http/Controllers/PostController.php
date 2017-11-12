@@ -4,9 +4,16 @@ namespace Blog\Http\Controllers;
 
 use Blog\Post;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Storage;
 
 class PostController extends Controller
 {
+//    public function __construct()
+//    {
+//        $this->middleware('auth');
+//    }
+
     /**
      * Display a listing of the resource.
      *
@@ -14,7 +21,7 @@ class PostController extends Controller
      */
     public function index()
     {
-        $posts = Post::all();
+        $posts = Post::with('user')->orderBy('created_at', 'DESC')->get();
 
         return view('posts', compact('posts'));
     }
@@ -41,6 +48,17 @@ class PostController extends Controller
         $post->title = $request->input('title');
         $post->posted_by = $request->input('posted_by');
         $post->body = $request->input('body');
+        if($request->hasFile('photo')){
+            $filename = md5(uniqid(time())).".".$request->file('photo')->getClientOriginalExtension();
+
+            //$request->file('photo')->move(public_path('photos'), $filename);
+            $img = $request->file('photo');
+            $post->photo = $filename;
+
+            Storage::disk('local')->put($filename, File::get($request->file('photo')));
+        }else{
+            $post->photo = null;
+        }
         $post->save();
         $request->session()->flash('message', 'Post created successfully');
         return redirect('/posts');
@@ -84,7 +102,9 @@ class PostController extends Controller
         $post->body = $request->input('body');
         $post->save();
         $request->session()->flash('message','post information updated');
-        return redirect('/posts');
+
+        return redirect()->route('posts.index');
+
     }
 
     /**
